@@ -9,14 +9,26 @@ import { HttpService } from './http.service';
 
 export class AppComponent implements OnInit {
   tasks;
+  eventId;
+  showid = {
+    description: "",
+    title: ""
+  };
+  showTasks: boolean;
+  showOneTask: boolean;
+  task;
 
 
   constructor(private _httpService: HttpService){}
 
   ngOnInit(){
+
     this._httpService.getTasks((res) => {
       this.tasks = res;
+      this.showTasks = false;
     })
+
+    
     // this.getTasksFromService();
     // this.num = 7;
     // this.randNum = Math.floor( (Math.random()  * 2 ) + 1);
@@ -25,8 +37,21 @@ export class AppComponent implements OnInit {
     // this.snacks = ["vanilla latte with skim milk", "brushed suede", "cookie"];
     // this.loggedIn = true;
   }
-  
-  // getTasksFromService(){
+  onButtonClick(): void { 
+    console.log(`Click event is working`);
+    this.showTasks = true;
+}
+//   onButtonClickEvent(id) { 
+//     console.log(`Click event is working with event: `, id);
+    
+// }
+onsubmit() {
+  this._httpService.getTaskFromID(this.eventId, (res) => {
+    this.showid = res;
+    this.showOneTask = true;
+  })
+}
+   // getTasksFromService(){
   //    let observable = this._httpService.getTasks();
   //    observable.subscribe(data => {
   //       console.log("Got our tasks!", data)

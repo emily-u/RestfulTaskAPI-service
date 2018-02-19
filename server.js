@@ -43,7 +43,7 @@ app.get('/tasks', function(req, res){
         if(err){
             res.json({message: "Error", error: err})
         }else{
-            console.log(results);
+            // console.log(results);
             res.json(results);
         }
     })
@@ -56,6 +56,18 @@ app.get('/tasks/:id', function(req, res){
             res.json({message: "Error", error: err});
         }else{
             res.json({message: "Success", data: results})
+        }
+    })
+})
+
+app.post("/tasks/:eventId", function(req, res) {
+    eventId = req.params.eventId;
+    Task.findOne({_id: eventId}, function(err, event){
+        if(err){
+            res.json({message: "Error", error: err});
+        }else{
+            console.log(event);
+            res.json(event)
         }
     })
 })

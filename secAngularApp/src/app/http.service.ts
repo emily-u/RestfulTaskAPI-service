@@ -20,6 +20,15 @@ export class HttpService {
     
   }
 
+  getTaskFromID(eventId, callback) {
+    this._http.post("/tasks/" + eventId, {}).subscribe(
+      (res) => {
+        callback(res);
+      })
+  }
+
+  
+
   // getOneTask() {
   //   let tempObservable = this._http.get('/tasks/5a86020794eaf518961188cb');
   //   tempObservable.subscribe(datafromserver => console.log("Got a task by ID!", datafromserver));

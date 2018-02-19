@@ -1,9 +1,22 @@
 <h1>Restful Task API</h1>
-<h2>All the tasks</h2>
-<ul *ngFor = "let t of tasks">
-  <li>{{t.title}}- {{t.description}}</li>
+<button (click)="onButtonClick()">Click to get all tasks</button>
+<br>
+<div *ngIf="showTasks">
+  <h2>All the tasks</h2>
+  <ul *ngFor="let t of tasks">
+    <li>{{t.title}} - {{t.description}}</li>
+  </ul>
+</div>
+
+<form (submit)="onsubmit()">
+  <input type="text" placeholder="Enter task id here" [(ngModel)] = "eventId" name="eventid">
+  <button>Click to get one task</button>
+</form>
+<ul *ngIf="showOneTask">
+  <li>{{showid.title}} - {{showid.description}}</li>
 </ul>
-<h3 *ngIf="tasks.length > 2">The third task:</h3>
+
+<!-- <h3 *ngIf="tasks.length > 2">The third task:</h3>
 <ul *ngIf="tasks.length > 2">
     <li>{{tasks[2].title}}- {{tasks[2].description}}</li>
-  </ul>
+  </ul> -->
