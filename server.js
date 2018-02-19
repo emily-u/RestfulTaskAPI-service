@@ -43,7 +43,8 @@ app.get('/tasks', function(req, res){
         if(err){
             res.json({message: "Error", error: err})
         }else{
-            res.json({message: "Success", data: results})
+            console.log(results);
+            res.json(results);
         }
     })
 })

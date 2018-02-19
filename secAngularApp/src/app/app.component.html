@@ -1,4 +1,25 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<h1>Restful Task API</h1>
+<h2>All the tasks</h2>
+<ul *ngFor = "let t of tasks">
+  <li>{{t.title}}- {{t.description}}</li>
+</ul>
+<h3 *ngIf="tasks.length > 2">The third task:</h3>
+<ul *ngIf="tasks.length > 2">
+    <li>{{tasks[2].title}}- {{tasks[2].description}}</li>
+  </ul>
+
+
+<!-- <h3>Value of num is: {{num}}</h3>
+<h3>Value of randNum is: {{randNum}}</h3>
+<h3>{{str}}</h3>
+<input type="text" [value]="first_name" />
+
+<p *ngIf="loggedIn">You are logged in!</p>
+<p *ngFor="let snack of snacks">{{snack}}</p>
+<p *ngIf="snacks.length < 3">You need more snacks.</p> -->
+
+
+<!-- The content below is only a placeholder and can be replaced.
 <div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
@@ -18,4 +39,4 @@
   </li>
   <button (click) = "click()">click me</button>
 </ul>
-
+ -->
