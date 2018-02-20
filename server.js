@@ -60,6 +60,7 @@ app.get('/tasks/:id', function(req, res){
     })
 })
 
+// get task by input ID
 app.post("/tasks/:eventId", function(req, res) {
     eventId = req.params.eventId;
     Task.findOne({_id: eventId}, function(err, event){
@@ -74,32 +75,51 @@ app.post("/tasks/:eventId", function(req, res) {
 
 // Create a Task
 app.post('/tasks', function(req, res){
+    console.log(req.body);
     let new_task = new Task(req.body);
-    new_task.save(function(err, results){
+    new_task.save(function(err){
         if(err){
             res.json({message: "Error", error: err});
         }else{
-            // res.redirect('/');
-            res.json({message: "Success", data: results})
+            res.json("create success")
         }
     })
 })
 
 // Update a Task by ID
-app.put('/tasks/:id', function(req, res) {
-	Task.update({_id: req.params.id}, {$set: {title: req.body.title, description: req.body.description, completed: req.body.completed}}, {multi: false}, function(err, results) {
-		if (err) {
+app.put('/tasks/:editTaskId', function(req, res) {
+    console.log("111", req.body);
+    editTaskId = req.params.editTaskId;
+    console.log(editTaskId);
+    Task.findOne({_id: editTaskId}, function(err, task) {
+        if (err) {
 			console.log('Update error', err);
-			res.json({message:'Error',error:err});
 		} else {
-			res.json({message:'Success'});
+            task.title = req.body.title;
+            task.description = req.body.description;
+            task.save(function(err) {
+                if(err) {
+                    console.log("err from task update: ", err);
+                }
+                else {
+                    res.json("success update task");
+                }
+            })
 		}
-	})
+    })
+	// Task.update({_id: editTaskId}, {$set: {title: req.body.title, description: req.body.description}}, function(err) {
+	// 	if (err) {
+	// 		console.log('Update error', err);
+	// 		res.json({message:'Error',error:err});
+	// 	} else {
+	// 		res.json('Success update');
+	// 	}
+	// })
 })
 
 // Delete a Task by ID
-app.delete('/tasks/:id', function(req, res){
-    Task.remove({_id: req.params.id}, function(err, results){
+app.delete('/tasks/:deleteTaskId', function(req, res){
+    Task.remove({_id: req.params.deleteTaskId}, function(err, results){
         if(err){
             res.json({message: "Error", error: err});
         }else{

@@ -17,39 +17,79 @@ export class AppComponent implements OnInit {
   showTasks: boolean;
   showOneTask: boolean;
   task;
-
+  newTask = {
+    title: "",
+    description: ""
+  };
+  editTask = {
+    title: "",
+    description: ""
+  };
+  editTaskId;
+  deleteTaskId;
 
   constructor(private _httpService: HttpService){}
 
   ngOnInit(){
-
     this._httpService.getTasks((res) => {
       this.tasks = res;
       this.showTasks = false;
     })
-
-    
-    // this.getTasksFromService();
-    // this.num = 7;
-    // this.randNum = Math.floor( (Math.random()  * 2 ) + 1);
-    // this.str = 'Hello Angular Developer!';
-    // this.first_name = 'Alpha';
-    // this.snacks = ["vanilla latte with skim milk", "brushed suede", "cookie"];
-    // this.loggedIn = true;
   }
-  onButtonClick(): void { 
-    console.log(`Click event is working`);
-    this.showTasks = true;
+
+  showEditForm(idPassFromHTML) {
+    document.getElementById(idPassFromHTML).style.display = "block";
+  }
+
+onButtonClick(): void {
+  console.log(`Click event is working`);
+  this.showTasks = true;
 }
-//   onButtonClickEvent(id) { 
-//     console.log(`Click event is working with event: `, id);
-    
-// }
+
 onsubmit() {
   this._httpService.getTaskFromID(this.eventId, (res) => {
     this.showid = res;
     this.showOneTask = true;
   })
+  }
+
+addTaskSubmit(){
+  this._httpService.addTask(this.newTask, (resFromService) => {
+    console.log("add task submit success", resFromService);
+    this._httpService.getTasks((res) => {
+      this.tasks = res;
+      this.showTasks = false;
+    })
+    this.newTask = {
+      title: "",
+      description: ""
+    };
+  }); 
+}
+
+editTaskSubmit(task_id){
+  this._httpService.editTask(task_id, this.editTask, (resFromService) => {
+    console.log("edit task submit success");
+    this._httpService.getTasks((res) => {
+      this.tasks = res;
+      this.showTasks = false;
+    })
+    this.editTask = {
+      title: "",
+      description: ""
+    };
+  }); 
+}
+
+deleteTaskButtonClicked(deleteTaskId){
+  this._httpService.deleteTask(deleteTaskId, (res) => {
+    console.log("delete Task Button Clicked");
+    this._httpService.getTasks((res) => {
+      this.tasks = res;
+      this.showTasks = false;
+    })
+  })
+}
 }
    // getTasksFromService(){
   //    let observable = this._httpService.getTasks();

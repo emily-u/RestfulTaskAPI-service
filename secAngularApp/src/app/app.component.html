@@ -1,3 +1,4 @@
+<!-- click button to show all tasks
 <h1>Restful Task API</h1>
 <button (click)="onButtonClick()">Click to get all tasks</button>
 <br>
@@ -6,16 +7,47 @@
   <ul *ngFor="let t of tasks">
     <li>{{t.title}} - {{t.description}}</li>
   </ul>
+</div> -->
+
+<!-- create a task -->
+<form (submit)="addTaskSubmit()">
+      <!-- use the json pipe to see how newTask changes in real time -->
+      <p> {{ newTask | json }} </p>
+      title: <input type="text" name="newTask.title" [(ngModel)]="newTask.title">
+      description: <input type="text" name="newTask.description" [(ngModel)]="newTask.description">
+      <input type="submit" value="Create Task">
+  </form>
+  
+<!-- edit and delete part -->
+
+<h3 *ngIf="tasks">Task List</h3>
+<div *ngFor="let t of tasks" class="eachTask">
+  <h4>{{t.title}}</h4>
+  <P>{{t.description}}</P>
+  <button (click) = "showEditForm(t._id)">EDIT</button>
+  <button (click) = "deleteTaskButtonClicked(t._id)">DELETE</button>
+
+  <form (submit)="editTaskSubmit(t._id)" id={{t._id}} style="display: none;">
+  <div>
+    <h4>Edit a task</h4>
+    <input type="text" value={{t.title}} [(ngModel)]="editTask.title" name="editTaskTitle">
+    <input type="text" value={{t.description}} [(ngModel)]="editTask.description" name="editTaskDesc">
+    <input type="submit" value="edit">
+  </div>
+</form>
 </div>
 
-<form (submit)="onsubmit()">
+
+<!-- get task by ID -->
+<!-- <form (submit)="onsubmit()">
   <input type="text" placeholder="Enter task id here" [(ngModel)] = "eventId" name="eventid">
   <button>Click to get one task</button>
 </form>
 <ul *ngIf="showOneTask">
   <li>{{showid.title}} - {{showid.description}}</li>
-</ul>
+</ul> -->
 
+<!-- show the third tasks -->
 <!-- <h3 *ngIf="tasks.length > 2">The third task:</h3>
 <ul *ngIf="tasks.length > 2">
     <li>{{tasks[2].title}}- {{tasks[2].description}}</li>

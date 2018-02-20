@@ -27,7 +27,25 @@ export class HttpService {
       })
   }
 
-  
+  addTask(newtask, callback){
+    this._http.post('/tasks', newtask).subscribe((resFromServer) => {
+      callback(resFromServer);
+    })
+}
+
+  editTask(editTaskId, edit_content, callback){
+    this._http.put('/tasks/' + editTaskId, edit_content).subscribe((resFromServer) => {
+      callback(resFromServer);
+    })
+}
+
+  deleteTask(deleteTaskId, callback){
+    this._http.delete('/tasks/' + deleteTaskId, {}).subscribe((resFromServer) => {
+      callback(resFromServer);
+    })
+}
+
+
 
   // getOneTask() {
   //   let tempObservable = this._http.get('/tasks/5a86020794eaf518961188cb');
